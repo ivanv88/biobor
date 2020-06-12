@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="rs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <title>Kalkulator</title>
+  <style>
+    .wrapper {
+      padding: 5px 15px 0 15px;
+      min-height: 100vh;
+      background-color: #fafafa;
+    }
+    .success {
+      color: #004085!important;
+      background-color: #cce5ff!important;
+      border-color: #b8daff!important;
+      font-weight: bold!important;
+    }
+    .reset {
+      color: #721c24!important;
+      background-color: #f8d7da!important;
+      border-color: #f5c6cb!important;
+      margin-right: 10px;
+    }
+    .calculate {
+      color: #155724!important;
+      background-color: #d4edda!important;
+      border-color: #c3e6cb!important;
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="container mt-3 mb-5">
+    <h3 style="text-align: center; font-size: 24px; font-weight: bold; color: #5c5c5c">
+      KALKULATOR BIOBOR JF
+    </h3>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <form id="kalkulator">
+          <div class="form-group mb-4">
+            <label for="kolicina">Unesi masu goriva</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">kg</div>
+              </div>
+              <input name="kol" type="number" class="form-control" id="kolicina" placeholder="0.00" aria-describedby="kolicinaHelp">
+            </div>
+            <small id="kolicinaHelp" class="form-text text-muted">Masa goriva u kg koju treba sipati u avion.</small>
+          </div>
+          <div class="form-group mb-4">
+            <label for="gustina">Unesi specifičnu gustinu goriva</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">g/m3</div>
+              </div>
+              <input type="number" class="form-control" id="gustina" placeholder="0.00" aria-describedby="gustinaHelp">
+            </div>
+            <small id="gustinaHelp" class="form-text text-muted">Gustina goriva u g / cm3.</small>
+          </div>
+          <div class="form-group mb-4">
+            <label for="rezultat">Rezultat</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">Oz</div>
+              </div>
+              <input type="number" class="form-control" id="rezultat" placeholder="0.00" aria-describedby="rezultatHelp" disabled>
+            </div>
+            <small id="rezultatHelp" class="form-text text-muted">Količina tečnosti u Oz.</small>
+          </div>
+          <div style="display: flex; justify-content: flex-end;">
+            <button id="reset" type="reset" class="btn reset">Reset</button>
+            <button id="izracunaj" type="button" class="btn calculate">Izračunaj</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  
+  <script>
+    $( document ).ready(function() {
+
+      var kolicinaGoriva = null;
+      var gustinaGoriva = null;
+      var rezultat = null;
+
+      $('#izracunaj').click(function() {
+        kolicinaGoriva = $("#kolicina").val();
+        gustinaGoriva = $("#gustina").val() * 1000;
+        rezultat = ((kolicinaGoriva / gustinaGoriva) * 1000) / 302.8;
+
+        if (kolicinaGoriva && gustinaGoriva) {
+          $("#rezultat").val(rezultat.toFixed(3));
+          $("#rezultat").addClass("success");
+        }
+      });
+
+      $('#reset').click(function() {
+        kolicinaGoriva = null;
+        gustinaGoriva = null;
+        rezultat = null;
+        $("#rezultat").removeClass("success");
+      });
+    
+    });
+
+  </script>
+</body>
+</html>
