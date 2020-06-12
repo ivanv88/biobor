@@ -7,6 +7,9 @@
 
   <title>Kalkulator</title>
   <style>
+    body {
+      overflow-y: hidden;
+    }
     .wrapper {
       padding: 5px 15px 0 15px;
       min-height: 100vh;
@@ -48,7 +51,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">kg</div>
               </div>
-              <input name="kol" type="number" class="form-control" id="kolicina" placeholder="0.00" aria-describedby="kolicinaHelp">
+              <input name="kol" type="number" class="form-control" id="kolicina" placeholder="0.00" aria-describedby="kolicinaHelp" inputmode="numeric" pattern="[0-9]*">
             </div>
             <small id="kolicinaHelp" class="form-text text-muted">Masa goriva u kg koju treba sipati u avion.</small>
           </div>
@@ -58,7 +61,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">g/m3</div>
               </div>
-              <input type="number" class="form-control" id="gustina" placeholder="0.00" aria-describedby="gustinaHelp">
+              <input type="number" class="form-control" id="gustina" placeholder="0.00" aria-describedby="gustinaHelp" inputmode="numeric" pattern="[0-9]*">
             </div>
             <small id="gustinaHelp" class="form-text text-muted">Gustina goriva u g / cm3.</small>
           </div>
