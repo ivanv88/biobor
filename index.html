@@ -59,7 +59,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">Kg</div>
               </div>
-              <input name="kol" type="number" class="form-control" id="kolicina" placeholder="0.00" aria-describedby="kolicinaHelp" inputmode="numeric">
+              <input name="kol" type="number" class="form-control" id="kolicina" placeholder="0.00" aria-describedby="kolicinaHelp" inputmode="numeric" pattern="^\d*(\.\d{0,4})?$">
             </div>
             <small id="kolicinaHelp" class="form-text text-muted">Masa goriva u Kg koju treba sipati u avion.</small>
           </div>
@@ -69,7 +69,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">Kg/l</div>
               </div>
-              <input type="number" class="form-control" id="gustina" placeholder="0.00" aria-describedby="gustinaHelp" inputmode="numeric">
+              <input type="number" class="form-control" id="gustina" placeholder="0.00" aria-describedby="gustinaHelp" inputmode="numeric" pattern="^\d*(\.\d{0,4})?$">
             </div>
             <small id="gustinaHelp" class="form-text text-muted">Gustina goriva u Kg/l, tačkom odvajati decimale.</small>
           </div>
