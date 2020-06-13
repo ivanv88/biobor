@@ -107,7 +107,7 @@
         </div>
           <div style="display: flex; justify-content: flex-end;">
             <button id="reset" type="reset" class="btn reset">Reset</button>
-            <button id="izracunaj" type="button" class="btn calculate">Izračunaj</button>
+            <button id="izracunaj" type="submit" class="btn calculate">Izračunaj</button>
           </div>
         </form>
 
@@ -130,7 +130,9 @@
       var gorivoLitara = null;
       var gorivoGalona = null;
 
-
+      $("#kalkulator").submit(function(e){
+        return false;
+      });
 
       $('#izracunaj').click(function() {
         kolicinaGoriva = $("#kolicina").val();
