@@ -15,6 +15,11 @@
       padding: 10px 15px 0 15px;
     }
     .success {
+      color: #155724!important;
+      background-color: #d4edda!important;
+      border-color: #c3e6cb!important;
+    }
+    .successFuel {
       color: #004085!important;
       background-color: #cce5ff!important;
       border-color: #b8daff!important;
@@ -31,6 +36,9 @@
       background-color: #d4edda!important;
       border-color: #c3e6cb!important;
     }
+    .invalid-text {
+      color: #dc3545!important;
+    }
   </style>
 </head>
 <body>
@@ -44,27 +52,27 @@
     <div class="row">
       <div class="col-md-12">
         <form id="kalkulator">
-          <div class="form-group mb-4">
+          <div class="form-group mb-3">
             <label for="kolicina">Unesi masu goriva</label>
             <div class="input-group">
               <div class="input-group-prepend">
-                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">kg</div>
+                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">Kg</div>
               </div>
               <input name="kol" type="number" class="form-control" id="kolicina" placeholder="0.00" aria-describedby="kolicinaHelp" inputmode="numeric" pattern="[0-9]*">
             </div>
-            <small id="kolicinaHelp" class="form-text text-muted">Masa goriva u kg koju treba sipati u avion.</small>
+            <small id="kolicinaHelp" class="form-text text-muted">Masa goriva u Kg koju treba sipati u avion.</small>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-3">
             <label for="gustina">Unesi specifičnu gustinu goriva</label>
             <div class="input-group">
               <div class="input-group-prepend">
-                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">g/m3</div>
+                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">Kg/l</div>
               </div>
               <input type="number" class="form-control" id="gustina" placeholder="0.00" aria-describedby="gustinaHelp" inputmode="numeric" pattern="[0-9]*">
             </div>
-            <small id="gustinaHelp" class="form-text text-muted">Gustina goriva u g / cm3, tačkom odvajati decimale.</small>
+            <small id="gustinaHelp" class="form-text text-muted">Gustina goriva u Kg/l, tačkom odvajati decimale.</small>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-3">
             <label for="rezultat">Rezultat</label>
             <div class="input-group">
               <div class="input-group-prepend">
@@ -74,6 +82,28 @@
             </div>
             <small id="rezultatHelp" class="form-text text-muted">Količina tečnosti u Oz.</small>
           </div>
+          <div class="row mb-4">
+          <div class="form-group col-6">
+            <label for="rezultat">Litara Goriva</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">lit.</div>
+              </div>
+              <input type="number" class="form-control" id="litara" placeholder="0.00" aria-describedby="litaraHelp" disabled>
+            </div>
+            <small id="litaraHelp" class="form-text text-muted">Zapremina goriva iz kg u l.</small>
+          </div>
+          <div class="form-group col-6">
+            <label for="rezultat">Galona goriva</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" style="width: 70px; display: flex; justify-content: center;">G</div>
+              </div>
+              <input type="number" class="form-control" id="galona" placeholder="0.00" aria-describedby="galonaHelp" disabled>
+            </div>
+            <small id="rezultatHelp" class="form-text text-muted">Zapremina goriva iz kg u G.</small>
+          </div>
+        </div>
           <div style="display: flex; justify-content: flex-end;">
             <button id="reset" type="reset" class="btn reset">Reset</button>
             <button id="izracunaj" type="button" class="btn calculate">Izračunaj</button>
@@ -96,23 +126,62 @@
       var kolicinaGoriva = null;
       var gustinaGoriva = null;
       var rezultat = null;
+      var gorivoLitara = null;
+      var gorivoGalona = null;
+
+
 
       $('#izracunaj').click(function() {
         kolicinaGoriva = $("#kolicina").val();
         gustinaGoriva = $("#gustina").val() * 1000;
-        rezultat = ((kolicinaGoriva / gustinaGoriva) * 1000) / 302.833;
+        gorivoLitara = (kolicinaGoriva / gustinaGoriva) * 1000;
+        gorivoGalona = gorivoLitara / 3.785;
+        rezultat = gorivoLitara / 302.833;
 
+        if (gustinaGoriva <= 0) {
+          $("#gustina").addClass("is-invalid");
+          $("#gustinaHelp").addClass("invalid-text");
+          $("#gustinaHelp").html("Vrednost mora biti veća od 0!");
+        }
+        if (kolicinaGoriva <= 0) {
+          $("#kolicina").addClass("is-invalid");
+          $("#kolicinaHelp").addClass("invalid-text");
+          $("#kolicinaHelp").html("Vrednost mora biti veća od 0!");
+        }
         if (kolicinaGoriva && gustinaGoriva) {
+          $("#gustina").removeClass("is-invalid");
+          $("#gustinaHelp").removeClass("invalid-text");
+          $("#gustinaHelp").html("Gustina goriva u kg/l, tačkom odvajati decimale.");
+
+          $("#kolicina").removeClass("is-invalid");
+          $("#kolicinaHelp").removeClass("invalid-text");
+          $("#kolicinaHelp").html("Masa goriva u kg koju treba sipati u avion.");
+
           $("#rezultat").val(rezultat.toFixed(3));
           $("#rezultat").addClass("success");
+          $("#litara").val(gorivoLitara.toFixed(1));
+          $("#galona").val(gorivoGalona.toFixed(1))
+          $("#litara, #galona").addClass("successFuel");
         }
       });
 
       $('#reset').click(function() {
         kolicinaGoriva = null;
         gustinaGoriva = null;
+        gorivoLitara = null;
+        gorivoGalona = null;
         rezultat = null;
+
+        $("#gustina").removeClass("is-invalid");
+        $("#gustinaHelp").removeClass("invalid-text");
+        $("#gustinaHelp").html("Gustina goriva u kg/l, tačkom odvajati decimale.");
+
+        $("#kolicina").removeClass("is-invalid");
+        $("#kolicinaHelp").removeClass("invalid-text");
+        $("#kolicinaHelp").html("Masa goriva u kg koju treba sipati u avion.");
+
         $("#rezultat").removeClass("success");
+        $("#litara, #galona").removeClass("successFuel");
       });
     
     });
